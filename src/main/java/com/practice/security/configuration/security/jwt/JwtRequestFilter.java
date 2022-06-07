@@ -39,6 +39,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 writeBody(response, generateNewToken(refreshToken));
                 return;
             }
+            else if(tokenProvider.isTokenExpired(refreshToken)){
+                throw new RuntimeException();//refreshToken 만료 예외
+            }
             String email = tokenProvider.getUserEmail(accessToken);
             registerSecurityContext(request, email);
         }
