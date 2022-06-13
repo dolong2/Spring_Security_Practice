@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,19 @@ import org.springframework.stereotype.Component;
 public class SecurityConfiguration extends WebSecurityConfiguration {
     private final TokenProvider tokenProvider;
     private final JwtRequestFilter jwtRequestFilter;
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer(){
+        return (web) -> web.ignoring().antMatchers("/v1/api-docs")
+                .antMatchers("/swagger-resources/**")
+                .antMatchers("/swagger-ui.html")
+                .antMatchers("configuration/**")
+                .antMatchers("/webjars/**")
+                .antMatchers("/public")
+                .and()
+                .ignoring()
+                .antMatchers("/h2-console/**/**");
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
