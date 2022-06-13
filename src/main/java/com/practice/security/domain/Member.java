@@ -28,11 +28,13 @@ public class Member implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING) @Column(name = "Role")
-    private Role role;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "Role", joinColumns = @JoinColumn(name = "id"))
+    private List<Role> role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.role;
     }
 
     @Override
