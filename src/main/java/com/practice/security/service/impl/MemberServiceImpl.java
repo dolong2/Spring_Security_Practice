@@ -7,6 +7,7 @@ import com.practice.security.dto.request.SignInDto;
 import com.practice.security.dto.response.MemberResDto;
 import com.practice.security.repository.MemberRepository;
 import com.practice.security.service.MemberService;
+import com.practice.security.util.CurrentMemberUtil;
 import com.practice.security.util.ResponseDtoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +24,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+    private final CurrentMemberUtil currentMemberUtil;
 
     @Override
     @Transactional
@@ -55,7 +57,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void logout() {
-
+        Member member = currentMemberUtil.getCurrentMember();
+        member.updateRefreshToken(null);
     }
 
     @Override
