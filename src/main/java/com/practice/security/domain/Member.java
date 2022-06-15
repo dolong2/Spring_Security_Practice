@@ -18,7 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor @AllArgsConstructor
 public class Member implements UserDetails {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String email;
@@ -27,10 +27,16 @@ public class Member implements UserDetails {
 
     private String password;
 
+    private String refreshToken;
+
     @Enumerated(EnumType.STRING) @Column(name = "Role")
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "Role", joinColumns = @JoinColumn(name = "id"))
     private List<Role> role;
+
+    public void updateRefreshToken(String refreshToken){
+        this.refreshToken = refreshToken;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
