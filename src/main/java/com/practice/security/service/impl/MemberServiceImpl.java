@@ -4,8 +4,10 @@ import com.practice.security.configuration.security.jwt.TokenProvider;
 import com.practice.security.domain.Member;
 import com.practice.security.dto.request.MemberReqDto;
 import com.practice.security.dto.request.SignInDto;
+import com.practice.security.dto.response.MemberResDto;
 import com.practice.security.repository.MemberRepository;
 import com.practice.security.service.MemberService;
+import com.practice.security.util.ResponseDtoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -54,6 +56,13 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void logout() {
 
+    }
+
+    @Override
+    public MemberResDto getMemberByIdx(Long memberIdx) {
+        Member member = memberRepository.findById(memberIdx)
+                .orElseThrow(() -> new RuntimeException());
+        return ResponseDtoUtil.mapping(member, MemberResDto.class);
     }
 
     private Map<String, Object> getLoginResponse(Member member, String accessToken, String refreshToken) {

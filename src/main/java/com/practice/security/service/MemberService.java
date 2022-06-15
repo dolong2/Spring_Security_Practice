@@ -14,4 +14,6 @@ public interface MemberService {
     Map<String, Object> login(SignInDto signInDto);
 
     void logout();
+
+    MemberResDto getMemberByIdx(Long memberIdx);
 }

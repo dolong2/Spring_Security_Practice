@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberResDto {
-    private Long memberId;
+    private Long id;
     private String name;
 }
