@@ -75,6 +75,13 @@ public class MemberServiceImpl implements MemberService {
         return ResponseDtoUtil.mapAll(all, MemberResDto.class);
     }
 
+    @Override
+    public void withdrawal() {
+        Member member = currentMemberUtil.getCurrentMember();
+        logout();
+        memberRepository.delete(member);
+    }
+
 
     private Map<String, Object> getLoginResponse(Member member, String accessToken, String refreshToken) {
         Map<String, Object> login = new HashMap<>();

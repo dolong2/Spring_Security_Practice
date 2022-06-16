@@ -19,4 +19,6 @@ public interface MemberService {
     MemberResDto getMemberByIdx(Long memberIdx);
 
     List<MemberResDto> getAllMember();
+
+    void withdrawal();
 }
