@@ -11,14 +11,13 @@ import com.practice.security.util.CurrentMemberUtil;
 import com.practice.security.util.ResponseDtoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
@@ -62,11 +61,20 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MemberResDto getMemberByIdx(Long memberIdx) {
         Member member = memberRepository.findById(memberIdx)
                 .orElseThrow(() -> new RuntimeException());
         return ResponseDtoUtil.mapping(member, MemberResDto.class);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MemberResDto> getAllMember() {
+        List<Member> all = memberRepository.findAll();
+        return ResponseDtoUtil.mapAll(all, MemberResDto.class);
+    }
+
 
     private Map<String, Object> getLoginResponse(Member member, String accessToken, String refreshToken) {
         Map<String, Object> login = new HashMap<>();

@@ -5,6 +5,7 @@ import com.practice.security.dto.request.SignInDto;
 import com.practice.security.dto.response.MemberResDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -16,4 +17,6 @@ public interface MemberService {
     void logout();
 
     MemberResDto getMemberByIdx(Long memberIdx);
+
+    List<MemberResDto> getAllMember();
 }
