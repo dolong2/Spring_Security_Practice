@@ -32,7 +32,8 @@ public class Member implements UserDetails {
     @Enumerated(EnumType.STRING) @Column(name = "Role")
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "Role", joinColumns = @JoinColumn(name = "id"))
-    private List<Role> role;
+    @Builder.Default
+    private List<Role> roles = new ArrayList<>();
 
     public void updateRefreshToken(String refreshToken){
         this.refreshToken = refreshToken;
@@ -40,7 +41,7 @@ public class Member implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.role;
+        return this.roles;
     }
 
     @Override

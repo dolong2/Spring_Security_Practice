@@ -11,6 +11,7 @@ import com.practice.security.util.CurrentMemberUtil;
 import com.practice.security.util.ResponseDtoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
@@ -32,7 +34,6 @@ public class MemberServiceImpl implements MemberService {
             throw new RuntimeException();
         }
         Member member = memberDto.toEntity(passwordEncoder.encode(memberDto.getPassword()));
-        System.out.println("member.getPassword() = " + member.getPassword());
         return memberRepository.save(member).getId();
     }
 
@@ -49,6 +50,7 @@ public class MemberServiceImpl implements MemberService {
         }
         String accessToken = tokenProvider.generateAccessToken(member.getEmail());
         String refreshToken = tokenProvider.generateRefreshToken(member.getEmail());
+        member.updateRefreshToken(refreshToken);
         Map<String, Object> loginResponse = getLoginResponse(member, accessToken, refreshToken);
         return loginResponse;
     }
