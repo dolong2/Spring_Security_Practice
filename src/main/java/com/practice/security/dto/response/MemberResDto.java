@@ -1,12 +1,9 @@
 package com.practice.security.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberResDto {
     private Long id;
     private String name;
