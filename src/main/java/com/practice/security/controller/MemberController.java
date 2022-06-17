@@ -2,6 +2,7 @@ package com.practice.security.controller;
 
 import com.practice.security.dto.request.MemberReqDto;
 import com.practice.security.dto.request.SignInDto;
+import com.practice.security.dto.response.MemberResDto;
 import com.practice.security.service.MemberService;
 import com.practice.security.util.response.ResponseService;
 import com.practice.security.util.response.result.CommonResultResponse;
@@ -35,7 +36,7 @@ public class MemberController {
     }
 
     @GetMapping("/{memberIdx}")
-    public CommonResultResponse getOneMember(@PathVariable Long memberIdx){
+    public SingleResultResponse<MemberResDto> getOneMember(@PathVariable Long memberIdx){
         return responseService.getSingleResult(memberService.getMemberByIdx(memberIdx));
     }
 
@@ -46,7 +47,7 @@ public class MemberController {
     }
 
     @GetMapping
-    public ListResultResponse getAllMember(){
+    public ListResultResponse<MemberResDto> getAllMember(){
         return responseService.getListResult(memberService.getAllMember());
     }
 }
