@@ -2,11 +2,9 @@ package com.practice.security.controller;
 
 import com.practice.security.dto.request.MemberReqDto;
 import com.practice.security.dto.request.SignInDto;
-import com.practice.security.dto.response.MemberResDto;
 import com.practice.security.service.MemberService;
 import com.practice.security.util.response.ResponseService;
 import com.practice.security.util.response.result.CommonResultResponse;
-import com.practice.security.util.response.result.ListResultResponse;
 import com.practice.security.util.response.result.SingleResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,19 +33,10 @@ public class MemberController {
         return responseService.getSuccessResult();
     }
 
-    @GetMapping("/{memberIdx}")
-    public SingleResultResponse<MemberResDto> getOneMember(@PathVariable Long memberIdx){
-        return responseService.getSingleResult(memberService.getMemberByIdx(memberIdx));
-    }
-
     @DeleteMapping
     public CommonResultResponse withdrawal(){
         memberService.withdrawal();
         return responseService.getSuccessResult();
     }
 
-    @GetMapping
-    public ListResultResponse<MemberResDto> getAllMember(){
-        return responseService.getListResult(memberService.getAllMember());
-    }
 }
