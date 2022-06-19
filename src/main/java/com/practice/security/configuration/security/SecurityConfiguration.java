@@ -37,7 +37,6 @@ public class SecurityConfiguration{
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        System.out.println("jwtRequestFilter = " + jwtRequestFilter);
         http
                 .cors()
                 .and()
