@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "member")
 @Builder
 @NoArgsConstructor @AllArgsConstructor
-public class Member implements UserDetails {
+public class Member{
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -39,38 +39,4 @@ public class Member implements UserDetails {
         this.refreshToken = refreshToken;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.name;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
 }
