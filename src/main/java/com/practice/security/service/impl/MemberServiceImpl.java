@@ -5,6 +5,10 @@ import com.practice.security.domain.Member;
 import com.practice.security.dto.request.MemberReqDto;
 import com.practice.security.dto.request.SignInDto;
 import com.practice.security.dto.response.MemberResDto;
+import com.practice.security.exception.ErrorCode;
+import com.practice.security.exception.errors.DuplicateMemberException;
+import com.practice.security.exception.errors.MemberNotFindException;
+import com.practice.security.exception.errors.PasswordNotCorrectException;
 import com.practice.security.repository.MemberRepository;
 import com.practice.security.service.MemberService;
 import com.practice.security.util.CurrentMemberUtil;
@@ -31,7 +35,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public Long join(MemberReqDto memberDto){
         if(!memberRepository.findOneByEmail(memberDto.getEmail()).isEmpty()){
-            throw new RuntimeException();
+            throw new DuplicateMemberException("Member already exists", ErrorCode.DUPLICATE_MEMBER);
         }
         Member member = memberDto.toEntity(passwordEncoder.encode(memberDto.getPassword()));
         return memberRepository.save(member).getId();
@@ -42,11 +46,11 @@ public class MemberServiceImpl implements MemberService {
     public Map<String, Object> login(SignInDto signInDto){
         Optional<Member> byEmail = memberRepository.findOneByEmail(signInDto.getEmail());
         if(byEmail.isEmpty()){
-            throw new RuntimeException("Can't find member by email");
+            throw new MemberNotFindException("Can't find member by email", ErrorCode.MEMBER_NOT_FIND);
         }
         Member member = byEmail.get();
         if(!passwordEncoder.matches(signInDto.getPassword(), member.getPassword())){
-            throw new RuntimeException("Password Not Matches");
+            throw new PasswordNotCorrectException("Password Not Matches", ErrorCode.PASSWORD_NOT_CORRECT);
         }
         String accessToken = tokenProvider.generateAccessToken(member.getEmail());
         String refreshToken = tokenProvider.generateRefreshToken(member.getEmail());
@@ -66,7 +70,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(readOnly = true)
     public MemberResDto getMemberByIdx(Long memberIdx) {
         Member member = memberRepository.findById(memberIdx)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new MemberNotFindException("Can't find member by email", ErrorCode.MEMBER_NOT_FIND));
         return ResponseDtoUtil.mapping(member, MemberResDto.class);
     }
 
