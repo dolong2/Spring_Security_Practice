@@ -14,7 +14,7 @@ public class CurrentMemberUtil {
     private final MemberRepository memberRepository;
 
     public static String getCurrentEmail(){
-        String email = null;
+        String email;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal instanceof UserDetails){
             email = ((Member) principal).getEmail();

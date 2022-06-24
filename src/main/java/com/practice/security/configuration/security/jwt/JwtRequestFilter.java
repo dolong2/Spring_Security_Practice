@@ -3,6 +3,8 @@ package com.practice.security.configuration.security.jwt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.practice.security.configuration.security.auth.MyUserDetailService;
+import com.practice.security.exception.ErrorCode;
+import com.practice.security.exception.errors.TokenExpiredException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,7 +41,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 return;
             }
             else if(tokenProvider.isTokenExpired(refreshToken)){
-                throw new RuntimeException();//refreshToken 만료 예외
+                throw new TokenExpiredException("RefreshToken is expired", ErrorCode.TOKEN_EXPIRED);
             }
             String email = tokenProvider.getUserEmail(accessToken);
             registerSecurityContext(request, email);
