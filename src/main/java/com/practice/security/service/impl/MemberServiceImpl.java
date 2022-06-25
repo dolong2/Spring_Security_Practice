@@ -82,6 +82,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void withdrawal() {
         Member member = currentMemberUtil.getCurrentMember();
         logout();
