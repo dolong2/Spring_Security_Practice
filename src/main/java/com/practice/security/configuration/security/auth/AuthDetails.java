@@ -12,6 +12,8 @@ public class AuthDetails implements UserDetails {
 
     private final Member member;
 
+    public String getEmail(){return member.getEmail();}
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return member.getRoles();
