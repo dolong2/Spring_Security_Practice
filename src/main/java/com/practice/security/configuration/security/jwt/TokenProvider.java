@@ -40,6 +40,7 @@ public class TokenProvider {
     }
 
     public Claims extractAllClaims(String token){
+        token=token.replace("Bearer ", "");
         return Jwts.parserBuilder()
                 .setSigningKey(getSigninKey(SECRET_KEY))
                 .build()
@@ -77,10 +78,10 @@ public class TokenProvider {
     }
 
     public String generateAccessToken(String email){
-        return generateToken(email, TokenType.ACCESS_TOKEN, ACCESS_TOKEN_EXPIRE_TIME);
+        return "Bearer "+generateToken(email, TokenType.ACCESS_TOKEN, ACCESS_TOKEN_EXPIRE_TIME);
     }
 
     public String generateRefreshToken(String email){
-        return generateToken(email, TokenType.REFRESH_TOKEN, REFRESH_TOKEN_EXPIRE_TIME);
+        return "Bearer "+generateToken(email, TokenType.REFRESH_TOKEN, REFRESH_TOKEN_EXPIRE_TIME);
     }
 }
