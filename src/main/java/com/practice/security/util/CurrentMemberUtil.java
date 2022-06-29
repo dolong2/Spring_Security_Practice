@@ -1,5 +1,6 @@
 package com.practice.security.util;
 
+import com.practice.security.configuration.security.auth.AuthDetails;
 import com.practice.security.domain.Member;
 import com.practice.security.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class CurrentMemberUtil {
         String email;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal instanceof UserDetails){
-            email = ((Member) principal).getEmail();
+            email = ((AuthDetails) principal).getEmail();
         } else {
             email = principal.toString();
         }
