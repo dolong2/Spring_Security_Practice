@@ -2,6 +2,7 @@ package com.practice.security.controller;
 
 import com.practice.security.dto.request.MemberReqDto;
 import com.practice.security.dto.request.SignInDto;
+import com.practice.security.dto.response.MemberResDto;
 import com.practice.security.service.MemberService;
 import com.practice.security.util.response.ResponseService;
 import com.practice.security.util.response.result.CommonResultResponse;
@@ -39,4 +40,8 @@ public class MemberController {
         return responseService.getSuccessResult();
     }
 
+    @GetMapping("/me")
+    public SingleResultResponse<MemberResDto> findMe(){
+        return responseService.getSingleResult(memberService.findMe());
+    }
 }
