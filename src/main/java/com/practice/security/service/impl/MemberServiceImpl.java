@@ -89,6 +89,13 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.delete(member);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public MemberResDto findMe() {
+        Member member = currentMemberUtil.getCurrentMember();
+        return ResponseDtoUtil.mapping(member, MemberResDto.class);
+    }
+
 
     private Map<String, Object> getLoginResponse(Member member, String accessToken, String refreshToken) {
         Map<String, Object> login = new HashMap<>();

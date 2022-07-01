@@ -21,4 +21,6 @@ public interface MemberService {
     List<MemberResDto> getAllMember();
 
     void withdrawal();
+
+    MemberResDto findMe();
 }
