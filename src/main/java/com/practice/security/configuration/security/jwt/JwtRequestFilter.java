@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.practice.security.configuration.security.auth.MyUserDetailService;
 import com.practice.security.exception.ErrorCode;
 import com.practice.security.exception.errors.TokenExpiredException;
+import com.practice.security.exception.errors.TokenNotValidException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,13 +36,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = request.getHeader("Authorization");
         String refreshToken = request.getHeader("RefreshToken");
-        if(accessToken != null && tokenProvider.getTokenType(accessToken).equals("accessToken")){
+        if(accessToken != null){
             if(tokenProvider.isTokenExpired(accessToken) && refreshToken != null && !tokenProvider.isTokenExpired(refreshToken) && tokenProvider.getTokenType(refreshToken).equals("refreshToken")){
                 writeBody(response, generateNewToken(refreshToken));
                 return;
             }
             else if(tokenProvider.isTokenExpired(refreshToken)){
                 throw new TokenExpiredException("RefreshToken is expired", ErrorCode.TOKEN_EXPIRED);
+            }
+            if(tokenProvider.getTokenType(accessToken).equals("accessToken")){
+                throw new TokenNotValidException("Token is not valid", ErrorCode.TOKEN_NOT_VALID);
             }
             String email = tokenProvider.getUserEmail(accessToken);
             registerSecurityContext(request, email);
