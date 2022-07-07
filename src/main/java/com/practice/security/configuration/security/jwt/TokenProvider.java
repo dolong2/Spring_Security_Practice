@@ -69,19 +69,19 @@ public class TokenProvider {
         final Claims claims = Jwts.claims();
         claims.put(TokenClaimName.USER_EMAIL.value, userEmail);
         claims.put(TokenClaimName.TOKEN_TYPE.value, tokenType.value);
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expireTime))
-                .signWith(getSigninKey(SECRET_KEY), SignatureAlgorithm.HS256)
-                .compact();
+        return "Bearer "+Jwts.builder()
+                    .setClaims(claims)
+                    .setIssuedAt(new Date(System.currentTimeMillis()))
+                    .setExpiration(new Date(System.currentTimeMillis() + expireTime))
+                    .signWith(getSigninKey(SECRET_KEY), SignatureAlgorithm.HS256)
+                    .compact();
     }
 
     public String generateAccessToken(String email){
-        return "Bearer "+generateToken(email, TokenType.ACCESS_TOKEN, ACCESS_TOKEN_EXPIRE_TIME);
+        return generateToken(email, TokenType.ACCESS_TOKEN, ACCESS_TOKEN_EXPIRE_TIME);
     }
 
     public String generateRefreshToken(String email){
-        return "Bearer "+generateToken(email, TokenType.REFRESH_TOKEN, REFRESH_TOKEN_EXPIRE_TIME);
+        return generateToken(email, TokenType.REFRESH_TOKEN, REFRESH_TOKEN_EXPIRE_TIME);
     }
 }
