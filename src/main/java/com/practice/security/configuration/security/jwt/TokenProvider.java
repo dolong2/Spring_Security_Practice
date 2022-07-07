@@ -34,7 +34,7 @@ public class TokenProvider {
         String value;
     }
 
-    private Key getSigninKey(String secretKey){
+    private Key getSignInKey(String secretKey){
         byte[] bytes = secretKey.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(bytes);
     }
@@ -42,7 +42,7 @@ public class TokenProvider {
     public Claims extractAllClaims(String token){
         token=token.replace("Bearer ", "");
         return Jwts.parserBuilder()
-                .setSigningKey(getSigninKey(SECRET_KEY))
+                .setSigningKey(getSignInKey(SECRET_KEY))
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -73,7 +73,7 @@ public class TokenProvider {
                     .setClaims(claims)
                     .setIssuedAt(new Date(System.currentTimeMillis()))
                     .setExpiration(new Date(System.currentTimeMillis() + expireTime))
-                    .signWith(getSigninKey(SECRET_KEY), SignatureAlgorithm.HS256)
+                    .signWith(getSignInKey(SECRET_KEY), SignatureAlgorithm.HS256)
                     .compact();
     }
 
