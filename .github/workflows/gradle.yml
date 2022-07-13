@@ -13,9 +13,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   build:
 
@@ -40,4 +37,4 @@ jobs:
       run: chmod +x gredlew
         
     - name: Build with Gradle
-      run: ./gredlew build
+      run: ./gredlew clean build
