@@ -28,9 +28,16 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '11'
-        distribution: 'temurin'
+        distribution: 'temurin' 
         
+    - name: Create application.yml
+      run: |
+        mkdir ./src/main/resources
+        touch ./src/main/resources/application.yml
+        echo "${{ secrets.APPLICATION_YML }}" >> ./src/main/resources/application.yml
+        
+    - name: Grant chmod greldew
+      run: chmod +x gredlew
         
     - name: Build with Gradle
       run: ./gredlew build
-      shell: bash
