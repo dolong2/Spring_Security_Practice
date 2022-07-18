@@ -44,7 +44,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             else if(tokenProvider.isTokenExpired(refreshToken)){
                 throw new TokenExpiredException("RefreshToken is expired", ErrorCode.TOKEN_EXPIRED);
             }
-            if(tokenProvider.getTokenType(accessToken).equals("accessToken")){
+            if(!tokenProvider.getTokenType(accessToken).equals("accessToken")){
                 throw new TokenNotValidException("Token is not valid", ErrorCode.TOKEN_NOT_VALID);
             }
             String email = tokenProvider.getUserEmail(accessToken);
