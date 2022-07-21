@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateMemberException.class)
-    public ResponseEntity<ErrorResponse> DuplicateMemberExceptionHandler(HttpServletRequest request, HttpServletResponse response, DuplicateMemberException ex){
+    public ResponseEntity<ErrorResponse> DuplicateMemberExceptionHandler(HttpServletRequest request, DuplicateMemberException ex){
         printError(request, ex, ex.getErrorCode().getMsg());
         ErrorResponse errorResponse = new ErrorResponse(ex.getErrorCode().isSuccess(), ex.getErrorCode().getMsg(), ex.getErrorCode().getStatus());
         return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(ex.getErrorCode().getStatus()));

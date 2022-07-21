@@ -3,6 +3,7 @@ package com.practice.security.configuration.security;
 import com.practice.security.configuration.security.handler.CustomAccessDeniedHandler;
 import com.practice.security.configuration.security.handler.CustomAuthenticationEntryPointHandler;
 import com.practice.security.configuration.security.jwt.JwtRequestFilter;
+import com.practice.security.filter.JwtExceptionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Component;
 public class SecurityConfiguration{
 
     private final JwtRequestFilter jwtRequestFilter;
+    private final JwtExceptionFilter jwtExceptionFilter;
 
 
     @Bean
@@ -56,7 +58,8 @@ public class SecurityConfiguration{
                     .accessDeniedHandler(new CustomAccessDeniedHandler())
                     .authenticationEntryPoint(new CustomAuthenticationEntryPointHandler())
                 .and()
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtExceptionFilter, JwtRequestFilter.class);
         return http.build();
     }
 
