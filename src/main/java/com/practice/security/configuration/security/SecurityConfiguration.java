@@ -2,7 +2,7 @@ package com.practice.security.configuration.security;
 
 import com.practice.security.configuration.security.handler.CustomAccessDeniedHandler;
 import com.practice.security.configuration.security.handler.CustomAuthenticationEntryPointHandler;
-import com.practice.security.configuration.security.jwt.JwtRequestFilter;
+import com.practice.security.filter.JwtRequestFilter;
 import com.practice.security.filter.JwtExceptionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

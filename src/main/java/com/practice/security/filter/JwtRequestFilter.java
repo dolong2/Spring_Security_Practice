@@ -1,6 +1,7 @@
-package com.practice.security.configuration.security.jwt;
+package com.practice.security.filter;
 
 import com.practice.security.configuration.security.auth.MyUserDetailService;
+import com.practice.security.configuration.security.jwt.TokenProvider;
 import com.practice.security.exception.ErrorCode;
 import com.practice.security.exception.errors.TokenExpiredException;
 import com.practice.security.exception.errors.TokenNotValidException;
