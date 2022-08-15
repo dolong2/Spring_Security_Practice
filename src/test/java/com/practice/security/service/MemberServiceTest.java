@@ -1,17 +1,16 @@
 package com.practice.security.service;
 
-import com.practice.security.domain.Member;
-import com.practice.security.dto.request.MemberReqDto;
-import com.practice.security.dto.request.SignInDto;
-import com.practice.security.repository.MemberRepository;
+import com.practice.security.domain.member.Member;
+import com.practice.security.domain.member.dto.request.MemberReqDto;
+import com.practice.security.domain.member.dto.request.SignInDto;
+import com.practice.security.domain.member.repository.MemberRepository;
+import com.practice.security.domain.member.service.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
-import javax.annotation.PostConstruct;
 import java.util.Map;
 
 @Profile("dev")
