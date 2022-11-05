@@ -1,7 +1,6 @@
 package com.practice.security.global.exception.handler;
 
 import com.practice.security.global.exception.ErrorResponse;
-import com.practice.security.exception.errors.*;
 import com.practice.security.global.exception.errors.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
