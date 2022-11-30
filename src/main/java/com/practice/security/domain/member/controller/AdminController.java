@@ -18,12 +18,12 @@ public class AdminController {
     private final AdminService adminService;
     private final ResponseService responseService;
 
-    @GetMapping("/memberInfo/{memberIdx}")
+    @GetMapping("/member/{memberIdx}")
     public SingleResultResponse<MemberResDto> getOneMember(@PathVariable Long memberIdx){
         return responseService.getSingleResult(memberService.getMemberByIdx(memberIdx));
     }
 
-    @GetMapping("/memberInfo")
+    @GetMapping("/member")
     public ListResultResponse<MemberResDto> getAllMember(){
         return responseService.getListResult(memberService.getAllMember());
     }
