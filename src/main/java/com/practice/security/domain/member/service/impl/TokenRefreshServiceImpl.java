@@ -19,9 +19,8 @@ public class TokenRefreshServiceImpl implements TokenRefreshService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Map refresh(String refreshToken) {
-        if(tokenProvider.isTokenExpired(refreshToken)){
+        if(tokenProvider.isTokenExpired(refreshToken))
             throw new TokenExpiredException("Refresh token is expired", ErrorCode.TOKEN_EXPIRED);
-        }
         String email = tokenProvider.getUserEmail(refreshToken);
         String accessToken = tokenProvider.generateAccessToken(email);
         Map<String, String> response = new HashMap<>();
