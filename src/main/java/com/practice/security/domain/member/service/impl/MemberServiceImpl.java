@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
     private final CurrentMemberUtil currentMemberUtil;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Long join(MemberReqDto memberDto){
         if(!memberRepository.findOneByEmail(memberDto.getEmail()).isEmpty()){
             throw new DuplicateMemberException("Member already exists", ErrorCode.DUPLICATE_MEMBER);
@@ -42,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Map<String, Object> login(SignInDto signInDto){
         Optional<Member> byEmail = memberRepository.findOneByEmail(signInDto.getEmail());
         if(byEmail.isEmpty()){
@@ -60,14 +60,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void logout() {
         Member member = currentMemberUtil.getCurrentMember();
         member.updateRefreshToken(null);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public MemberResDto getMemberByIdx(Long memberIdx) {
         Member member = memberRepository.findById(memberIdx)
                 .orElseThrow(() -> new MemberNotFindException("Can't find member by email", ErrorCode.MEMBER_NOT_FIND));
@@ -75,14 +75,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<MemberResDto> getAllMember() {
         List<Member> all = memberRepository.findAll();
         return ResponseDtoUtil.mapAll(all, MemberResDto.class);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void withdrawal() {
         Member member = currentMemberUtil.getCurrentMember();
         logout();
@@ -90,7 +90,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public MemberResDto findMe() {
         Member member = currentMemberUtil.getCurrentMember();
         return ResponseDtoUtil.mapping(member, MemberResDto.class);

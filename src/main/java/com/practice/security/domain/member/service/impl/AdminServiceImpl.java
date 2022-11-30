@@ -17,7 +17,7 @@ public class AdminServiceImpl implements AdminService {
     private final MemberRepository memberRepository;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void grantRole(Long memberIdx) {
         Member member = memberRepository.findById(memberIdx)
                 .orElseThrow(() -> new MemberNotFindException("Can't find member by email", ErrorCode.MEMBER_NOT_FIND));
