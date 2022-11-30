@@ -51,7 +51,7 @@ public class SecurityConfiguration{
                     .antMatchers("/v1/member/join").permitAll()
                     .antMatchers("/v1/member/login").permitAll()
                     .antMatchers("/v1/admin/**").hasRole("ADMIN")
-                    .antMatchers("/v1/member/**").hasRole("MEMBER")
+                    .antMatchers("/v1/member/**").authenticated()
                     .anyRequest().permitAll()
                 .and()
                 .exceptionHandling()
