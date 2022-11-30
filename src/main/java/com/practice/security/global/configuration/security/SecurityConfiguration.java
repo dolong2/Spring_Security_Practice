@@ -41,25 +41,25 @@ public class SecurityConfiguration{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
-                .cors()
-                .and()
-                .csrf().disable()
-                .httpBasic().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeHttpRequests()
-                    .antMatchers("/v1/member/join").permitAll()
-                    .antMatchers("/v1/member/login").permitAll()
-                    .antMatchers("/v1/admin/**").hasRole("ADMIN")
-                    .antMatchers("/v1/member/**").authenticated()
-                    .anyRequest().permitAll()
-                .and()
-                .exceptionHandling()
-                    .accessDeniedHandler(new CustomAccessDeniedHandler())
-                    .authenticationEntryPoint(new CustomAuthenticationEntryPointHandler())
-                .and()
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtExceptionFilter, JwtRequestFilter.class);
+            .cors()
+            .and()
+            .csrf().disable()
+            .httpBasic().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeHttpRequests()
+                .antMatchers("/v1/member/join").permitAll()
+                .antMatchers("/v1/member/login").permitAll()
+                .antMatchers("/v1/admin/**").hasRole("ADMIN")
+                .antMatchers("/v1/member/**").authenticated()
+                .anyRequest().permitAll()
+            .and()
+            .exceptionHandling()
+                .accessDeniedHandler(new CustomAccessDeniedHandler())
+                .authenticationEntryPoint(new CustomAuthenticationEntryPointHandler())
+            .and()
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(jwtExceptionFilter, JwtRequestFilter.class);
         return http.build();
     }
 
