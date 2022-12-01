@@ -69,12 +69,12 @@ public class TokenProvider {
         final Claims claims = Jwts.claims();
         claims.put(TokenClaimName.USER_EMAIL.value, userEmail);
         claims.put(TokenClaimName.TOKEN_TYPE.value, tokenType.value);
-        return "Bearer "+Jwts.builder()
-                    .setClaims(claims)
-                    .setIssuedAt(new Date(System.currentTimeMillis()))
-                    .setExpiration(new Date(System.currentTimeMillis() + expireTime))
-                    .signWith(getSignInKey(SECRET_KEY), SignatureAlgorithm.HS256)
-                    .compact();
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expireTime))
+                .signWith(getSignInKey(SECRET_KEY), SignatureAlgorithm.HS256)
+                .compact();
     }
 
     public String generateAccessToken(String email){
